@@ -143,7 +143,7 @@ def collect_transcriptions(audio_samples):
     additional_df = pd.DataFrame(transcriptions)
     updated_orders = df.append(additional_df, ignore_index=True)
     
-    conn.update(worksheet="Orders", data=updated_orders)
+    conn.update(worksheet="IntelligibilityEvaluation", data=updated_orders)
 
     if st.button('Submit All Transcriptions'):
         st.write("All transcriptions submitted successfully 🤓!")
