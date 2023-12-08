@@ -144,8 +144,7 @@ def collect_transcriptions(audio_samples):
 
         additional_df = pd.DataFrame(transcriptions)
 
-        updated_orders = df.append(additional_df, ignore_index=True)
-    
+        updated_orders = pd.concat([df, additional_df], ignore_index=True)
         conn.update(worksheet="IntelligibilityEvaluation", data=updated_orders)
         st.write("All transcriptions submitted successfully 🤓!")
         #st.cache_resource.clear()
