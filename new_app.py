@@ -2,6 +2,13 @@ import streamlit as st
 import os
 import asyncio
 import time
+import pandas as pd
+from streamlit_gsheets import GSheetsConnection
+
+
+st.divider()
+st.write("CRUD Operations:")
+conn = st.connection("gsheets", type=GSheetsConnection)
 
 # def main():
 #     st.title('Audio Comparison Survey')
@@ -115,6 +122,11 @@ def collect_natural(audio_samples):
 #         }
 #         #st.write(f"{sample}: {rating} - {rating_choices[rating]}")
 
+def create_orders_dataframe():
+    return pd.DataFrame({
+        'Audio': [101, 102, 103, 104, 105]
+    })
+
 def collect_transcriptions(audio_samples):
     transcriptions = {}
     total_samples = len(audio_samples)
@@ -124,10 +136,17 @@ def collect_transcriptions(audio_samples):
         st.audio(audio_sample, format='audio/wav')
 
         transcription = st.text_area(f"What do you hear in audio {count + 1}?", key=f"transcription_{count}")
-        transcriptions[f"Audio_{count + 1}"] = transcription
+        transcriptions[f"Audio_{count + 1}"] = [transcription]
+    
+    
+    df = conn.read(worksheet="Orders")
+    additional_df = pd.DataFrame(transcriptions)
+    updated_orders = df.append(additional_df, ignore_index=True)
+    
+    conn.update(worksheet="Orders", data=updated_orders)
 
     if st.button('Submit All Transcriptions'):
-        st.write("All transcriptions submitted successfully!")
+        st.write("All transcriptions submitted successfully 🤓!")
         return transcriptions   
 
 
@@ -168,7 +187,6 @@ def page_home():
     st.write("You are given a set of audio files (possibly hear many times), then you will have to write down all the text you hear!")
 
     audio_samples = list_files_with_full_path(folder_path)
-    print(audio_samples)
     survey_transcriptions = collect_transcriptions(audio_samples)
 
 

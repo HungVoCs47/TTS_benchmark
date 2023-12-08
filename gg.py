@@ -38,14 +38,14 @@ if st.button("New Worksheet"):
 
 if st.button("Update Worksheet"):
     
-    updated_orders = orders.copy()
+    df = conn.read(worksheet="Orders")
     additional_data = {'OrderID': [107],
         'CustomerName': ['Hung Vo'],
         'ProductList': ['D'],
         'TotalPrice': [100],
         'OrderDate': ['2023-08-18']}
     additional_df = pd.DataFrame(additional_data)
-    updated_orders = updated_orders.append(additional_df, ignore_index=True)
+    updated_orders = df.append(additional_df, ignore_index=True)
     conn.update(worksheet="Orders", data=updated_orders)
     st.success("Worksheet Updated 🤓")
 
