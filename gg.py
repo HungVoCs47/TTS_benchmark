@@ -7,25 +7,33 @@ st.title("Google Sheets as a DataBase")
 #Function to create a sample Orders dataframe
 def create_orders_dataframe():
     return pd.DataFrame({
-        'OrderID': [101, 102, 103, 104, 105],
-        'CustomerName': ['Alice', 'Bob', 'Charlie', 'David', 'Eve'],
-        'ProductList': ['ProductA, ProductB', 'ProductC', 'ProductA, ProductC', 'ProductB, ProductD', 'ProductD'],
-        'TotalPrice': [200, 150, 250, 300, 100],
-        'OrderDate': ['2023-08-18', '2023-08-19', '2023-08-19', '2023-08-20', '2023-08-20']
+        'Audio_1': [],
+        'Audio_2': [],
+        'Audio_3': [],
+        'Audio_4': [],
+        'Audio_5': [],
+        'Audio_6': [],
+        'Audio_7': [],
+        'Audio_8': [],
+        'Audio_9': [], 
+        'Audio_10': [], 
+        'Audio_12': [],
+        'Audio_13': [],
+        'Audio_14': [],
+        'Audio_15': [],
+        'Audio_16': [],
+        'Audio_17': [],
+        'Audio_18': [],
+        'Audio_19': [],
+        'Audio_20': []
     })
 
 # Create the Orders dataframe
 orders = create_orders_dataframe()
 
 # Update the TotalPrice column in the orders dataframe to create updated_orders
-updated_orders = orders.copy()
-updated_orders['TotalPrice'] = updated_orders['TotalPrice'] * 100
 
-with st.expander("Data ⤵"):
-    st.write("Orders")
-    st.dataframe(orders)
-    st.write("Updated Orders")
-    st.dataframe(updated_orders)
+
 
 st.divider()
 st.write("CRUD Operations:")
@@ -33,7 +41,7 @@ st.write("CRUD Operations:")
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 if st.button("New Worksheet"):
-    conn.create(worksheet="Orders", data=orders)
+    conn.create(worksheet="IntelligibilityEvaluation", data=orders)
     st.success("Worksheet Created 🎉")
 
 if st.button("Update Worksheet"):
