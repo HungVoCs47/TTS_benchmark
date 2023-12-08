@@ -123,7 +123,7 @@ def collect_natural(audio_samples):
 
 
 def collect_transcriptions(audio_samples):
-    conn = st.connection("gsheets", type=GSheetsConnection)
+    conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 
     transcriptions = {}
     total_samples = len(audio_samples)
