@@ -165,6 +165,7 @@ def page_home():
     st.write("You are given a set of audio files (possibly hear many times), then you will have to write down all the text you hear!")
 
     audio_samples = list_files_in_directory(folder_path)
+    print(audio_samples)
     survey_transcriptions = collect_transcriptions(audio_samples)
 
 
