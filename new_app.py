@@ -127,7 +127,7 @@ def collect_transcriptions(audio_samples):
 
     transcriptions = {}
     total_samples = len(audio_samples)
-    df = conn.read(worksheet="IntelligibilityEvaluation")
+    df = conn.read(worksheet="InteEV")
 
     for count, audio_sample in enumerate(audio_samples):
         st.write(f"Listening to audio {count + 1}")
@@ -145,7 +145,7 @@ def collect_transcriptions(audio_samples):
         additional_df = pd.DataFrame(transcriptions)
 
         updated_orders = pd.concat([df, additional_df])
-        conn.update(worksheet="IntelligibilityEvaluation", data=updated_orders)
+        conn.update(worksheet="InteEV", data=updated_orders)
         st.write("All transcriptions submitted successfully 🤓!")
         #st.cache_resource.clear()
     return transcriptions   
