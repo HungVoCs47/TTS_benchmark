@@ -3,6 +3,7 @@ import os
 import asyncio
 import time
 import pandas as pd
+import streamlit_gsheets
 from streamlit_gsheets import GSheetsConnection
 
 
