@@ -148,12 +148,23 @@ def collect_transcriptions(audio_samples):
 #     #for sample, transcription in survey_transcriptions.items():
 #         #st.write(f"{sample}: {transcription}")
 
+def list_files_in_directory(directory):
+    try:
+        # List all files in the directory
+        files = os.listdir(directory)
+        return files
+    except Exception as e:
+        return f"Error: {e}"
+
+# Replace 'path/to/your/folder' with your directory path
+folder_path = 'jp_dataset/basic5000/wav'
+
 
 def page_home():
     st.title('Intelligibility Evaluation')
     st.write("You are given a set of audio files (possibly hear many times), then you will have to write down all the text you hear!")
 
-    audio_samples = ["jp_dataset/basic5000/wav/BASIC5000_0001.wav","jp_dataset/basic5000/wav/BASIC5000_0001.wav","jp_dataset/basic5000/wav/BASIC5000_0001.wav"]
+    audio_samples = list_files_in_directory(folder_path)
     survey_transcriptions = collect_transcriptions(audio_samples)
 
 
