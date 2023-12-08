@@ -3,12 +3,10 @@ import os
 import asyncio
 import time
 import pandas as pd
-import streamlit_gsheets
 from streamlit_gsheets import GSheetsConnection
 
 
 st.divider()
-st.write("CRUD Operations:")
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 # def main():
@@ -123,32 +121,34 @@ def collect_natural(audio_samples):
 #         }
 #         #st.write(f"{sample}: {rating} - {rating_choices[rating]}")
 
-def create_orders_dataframe():
-    return pd.DataFrame({
-        'Audio': [101, 102, 103, 104, 105]
-    })
+
 
 def collect_transcriptions(audio_samples):
     transcriptions = {}
     total_samples = len(audio_samples)
+    df = conn.read(worksheet="IntelligibilityEvaluation")
 
     for count, audio_sample in enumerate(audio_samples):
         st.write(f"Listening to audio {count + 1}")
         st.audio(audio_sample, format='audio/wav')
 
         transcription = st.text_area(f"What do you hear in audio {count + 1}?", key=f"transcription_{count}")
-        transcriptions[f"Audio_{count + 1}"] = [transcription]
+        transcriptions[f"Audio_{count + 1}"] = [str(transcription)]
     
     
-    df = conn.read(worksheet="Orders")
-    additional_df = pd.DataFrame(transcriptions)
-    updated_orders = df.append(additional_df, ignore_index=True)
     
-    conn.update(worksheet="IntelligibilityEvaluation", data=updated_orders)
-
+    #print(transcriptions)
     if st.button('Submit All Transcriptions'):
+        
+
+        additional_df = pd.DataFrame(transcriptions)
+
+        updated_orders = df.append(additional_df, ignore_index=True)
+    
+        conn.update(worksheet="IntelligibilityEvaluation", data=updated_orders)
         st.write("All transcriptions submitted successfully 🤓!")
-        return transcriptions   
+        st.cache_resource.clear()
+    return transcriptions   
 
 
 # # Main function for Streamlit app

@@ -7,25 +7,26 @@ st.title("Google Sheets as a DataBase")
 #Function to create a sample Orders dataframe
 def create_orders_dataframe():
     return pd.DataFrame({
-        'Audio_1': [],
-        'Audio_2': [],
-        'Audio_3': [],
-        'Audio_4': [],
-        'Audio_5': [],
-        'Audio_6': [],
-        'Audio_7': [],
-        'Audio_8': [],
-        'Audio_9': [], 
-        'Audio_10': [], 
-        'Audio_12': [],
-        'Audio_13': [],
-        'Audio_14': [],
-        'Audio_15': [],
-        'Audio_16': [],
-        'Audio_17': [],
-        'Audio_18': [],
-        'Audio_19': [],
-        'Audio_20': []
+        'Audio_1': ['a'],
+        'Audio_2': ['a'],
+        'Audio_3': ['a'],
+        'Audio_4': ['a'],
+        'Audio_5': ['a'],
+        'Audio_6': ['a'],
+        'Audio_7': ['a'],
+        'Audio_8': ['a'],
+        'Audio_9': ['a'], 
+        'Audio_10': ['a'], 
+        'Audio_11': ['a'],
+        'Audio_12': ['a'],
+        'Audio_13': ['a'],
+        'Audio_14': ['a'],
+        'Audio_15': ['a'],
+        'Audio_16': ['a'],
+        'Audio_17': ['a'],
+        'Audio_18': ['a'],
+        'Audio_19': ['a'],
+        'Audio_20': ['a']
     })
 
 # Create the Orders dataframe
@@ -46,17 +47,34 @@ if st.button("New Worksheet"):
 
 if st.button("Update Worksheet"):
     
-    df = conn.read(worksheet="Orders")
-    additional_data = {'OrderID': [107],
-        'CustomerName': ['Hung Vo'],
-        'ProductList': ['D'],
-        'TotalPrice': [100],
-        'OrderDate': ['2023-08-18']}
+    df = conn.read(worksheet="IntelligibilityEvaluation")
+    additional_data = {
+        'Audio_1': ['c'],
+        'Audio_2': ['b'],
+        'Audio_3': ['a'],
+        'Audio_4': ['a'],
+        'Audio_5': ['a'],
+        'Audio_6': ['a'],
+        'Audio_7': ['a'],
+        'Audio_8': ['a'],
+        'Audio_9': ['a'], 
+        'Audio_10': ['a'], 
+        'Audio_11': ['a'],
+        'Audio_12': ['a'],
+        'Audio_13': ['a'],
+        'Audio_14': ['a'],
+        'Audio_15': ['a'],
+        'Audio_16': ['a'],
+        'Audio_17': ['a'],
+        'Audio_18': ['a'],
+        'Audio_19': ['a'],
+        'Audio_20': ['a']
+    }
     additional_df = pd.DataFrame(additional_data)
     updated_orders = df.append(additional_df, ignore_index=True)
-    conn.update(worksheet="Orders", data=updated_orders)
+    conn.update(worksheet="IntelligibilityEvaluation", data=updated_orders)
     st.success("Worksheet Updated 🤓")
 
 if st.button("Clear Worksheet"):
-    conn.clear(worksheet="Orders")
+    conn.clear(worksheet="IntelligibilityEvaluation")
     st.success("Worksheet Cleared 🧹")
