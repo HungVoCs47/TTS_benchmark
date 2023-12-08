@@ -148,11 +148,14 @@ def collect_transcriptions(audio_samples):
 #     #for sample, transcription in survey_transcriptions.items():
 #         #st.write(f"{sample}: {transcription}")
 
-def list_files_in_directory(directory):
+def list_files_with_full_path(directory):
     try:
-        # List all files in the directory
-        files = os.listdir(directory)
-        return files
+        files_with_path = []  # List to store full paths of files
+        for file_name in os.listdir(directory):
+            file_path = os.path.join(directory, file_name)
+            if os.path.isfile(file_path):  # Check if it's a file (not a directory)
+                files_with_path.append(file_path)
+        return files_with_path
     except Exception as e:
         return f"Error: {e}"
 
