@@ -127,7 +127,7 @@ def collect_transcriptions(audio_samples):
 
     transcriptions = {}
     total_samples = len(audio_samples)
-    df = conn.read(spreadsheet='gsheets',worksheet="IntelligibilityEvaluation")
+    df = conn.read(worksheet="IntelligibilityEvaluation")
 
     for count, audio_sample in enumerate(audio_samples):
         st.write(f"Listening to audio {count + 1}")
