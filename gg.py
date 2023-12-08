@@ -42,12 +42,12 @@ st.write("CRUD Operations:")
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 if st.button("New Worksheet"):
-    conn.create(worksheet="IntelligibilityEvaluation", data=orders)
+    conn.create(worksheet="InteEV", data=orders)
     st.success("Worksheet Created 🎉")
 
 if st.button("Update Worksheet"):
     
-    df = conn.read(worksheet="IntelligibilityEvaluation")
+    df = conn.read(worksheet="InteEV")
     additional_data = {
         'Audio_1': ['c'],
         'Audio_2': ['b'],
@@ -72,7 +72,7 @@ if st.button("Update Worksheet"):
     }
     additional_df = pd.DataFrame(additional_data)
     updated_orders = df.append(additional_df, ignore_index=True)
-    conn.update(worksheet="IntelligibilityEvaluation", data=updated_orders)
+    conn.update(worksheet="InteEV", data=updated_orders)
     st.success("Worksheet Updated 🤓")
 
 if st.button("Clear Worksheet"):

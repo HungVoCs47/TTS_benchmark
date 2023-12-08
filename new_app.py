@@ -143,9 +143,13 @@ def collect_transcriptions(audio_samples):
         
 
         additional_df = pd.DataFrame(transcriptions)
+        
+        sql = 'INSERT INTO table_name (Audio_1, Audio_2, Audio_3) VALUES (value1, value2, value3)'
+        total_orders = conn.query(sql=sql)  # default ttl=3600 seconds / 60 min
 
+        
         updated_orders = pd.concat([df, additional_df])
-        conn.update(worksheet="InteEV", data=updated_orders)
+        conn.update(worksheet="InteEV", data=total_orders)
         st.write("All transcriptions submitted successfully 🤓!")
         #st.cache_resource.clear()
     return transcriptions   
