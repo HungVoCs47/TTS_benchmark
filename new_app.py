@@ -144,7 +144,7 @@ def collect_transcriptions(audio_samples):
 
         additional_df = pd.DataFrame(transcriptions)
         
-        sql = 'INSERT INTO InteEV (Audio_1, Audio_2, Audio_3) VALUES (value1, value2, value3)'
+        sql = 'INSERT INTO InteEV (Audio_1, Audio_2, Audio_3) VALUES (1, 2, 3)'
         total_orders = conn.query(sql=sql)  # default ttl=3600 seconds / 60 min
 
         
