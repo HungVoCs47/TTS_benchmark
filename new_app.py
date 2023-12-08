@@ -4,6 +4,8 @@ import asyncio
 import time
 import pandas as pd
 from streamlit_gsheets import GSheetsConnection
+import gspread
+
 
 
 st.divider()
