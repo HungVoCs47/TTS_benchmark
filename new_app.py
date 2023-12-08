@@ -7,7 +7,6 @@ from streamlit_gsheets import GSheetsConnection
 
 
 st.divider()
-conn = st.connection("gsheets", type=GSheetsConnection)
 
 # def main():
 #     st.title('Audio Comparison Survey')
@@ -124,6 +123,8 @@ def collect_natural(audio_samples):
 
 
 def collect_transcriptions(audio_samples):
+    conn = st.connection("gsheets", type=GSheetsConnection)
+
     transcriptions = {}
     total_samples = len(audio_samples)
     df = conn.read(worksheet="IntelligibilityEvaluation")
@@ -147,7 +148,7 @@ def collect_transcriptions(audio_samples):
     
         conn.update(worksheet="IntelligibilityEvaluation", data=updated_orders)
         st.write("All transcriptions submitted successfully 🤓!")
-        st.cache_resource.clear()
+        #st.cache_resource.clear()
     return transcriptions   
 
 
