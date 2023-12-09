@@ -62,7 +62,8 @@ def collect_ratings_comprehend(audio_samples):
         # Implement code to play the audio sample here (this depends on your audio playback method)
 
         # Ask the user for their rating by presenting a multiple-choice interface
-        rating = st.radio(f"How will you rate the comprehensibility of the audio ?", list(rating_choices.values()), index=2)
+        rating = st.radio(f"How will you rate the comprehensibility of the audio ?",
+                          list(rating_choices.values()), key=f"transcription_{count}" , index=2)
         selected_rating = [key for key, value in rating_choices.items() if value == rating][0]
         ratings[sample] = selected_rating
         count += 1
@@ -141,7 +142,7 @@ def collect_transcriptions(audio_samples):
         st.write(f"Listening to audio {count + 1}")
         st.audio(audio_sample, format='audio/wav')
 
-        transcription = st.text_area(f"What do you hear in audio {count + 1}?", key=f"transcription_{count}")
+        transcription = st.text_area(f"What do you hear in audio {count + 1}?",  key=f"transcription_{count} ")
         transcriptions[f"Audio_{count + 1}"] = str(transcription)
     
     
