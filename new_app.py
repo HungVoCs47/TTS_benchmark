@@ -5,8 +5,10 @@ import time
 import pandas as pd
 from streamlit_gsheets import GSheetsConnection
 import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 
 
+scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 
 st.divider()
 
@@ -125,7 +127,12 @@ conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 
 
 def collect_transcriptions(audio_samples):
+    creds = ServiceAccountCredentials.from_json_keyfile_name('evaluation-407510-8f31bc069971.json', scope)
+
+    client = gspread.authorize(creds)
     
+#Create one workbook name it 'TestSheet' and at the bottom rename Sheet1 as 'names'
+    sh = client.open('docs').worksheet('InteEV') 
 
     transcriptions = {}
     total_samples = len(audio_samples)
@@ -142,16 +149,13 @@ def collect_transcriptions(audio_samples):
     
     #print(transcriptions)
     if st.button('Submit All Transcriptions'):
-        
+        rows =[]
+        for count in range(len(audio_samples)):
+            rows.append(transcriptions[f"Audio_{count + 1}"])
 
         additional_df = pd.DataFrame(transcriptions)
         
-        sql = 'INSERT INTO InteEV (Audio_1, Audio_2, Audio_3) VALUES (1, 2, 3)'
-        total_orders = conn.query(sql=sql)  # default ttl=3600 seconds / 60 min
-
-        
-        updated_orders = pd.concat([df, additional_df])
-        conn.update(worksheet="InteEV", data=total_orders)
+        sh.append_row(rows)
         st.write("All transcriptions submitted successfully 🤓!")
         #st.cache_resource.clear()
     return transcriptions   
