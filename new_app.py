@@ -203,7 +203,7 @@ def page_home():
 def page_audio_comparison():
     st.title('Naturalness Evaluation')
     st.write("You are given a set of audio files (possibly hear many times), then you will have to decide whether the voice is understandable and natural")
-    audio_samples = ["jp_dataset/basic5000/wav/BASIC5000_0001.wav"]  # Add your audio file names or descriptions
+    audio_samples = list_files_with_full_path(folder_path)  # Add your audio file names or descriptions
 
     # Collect ratings
     survey_ratings_comprehend = collect_ratings_comprehend(audio_samples)
