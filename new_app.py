@@ -46,6 +46,13 @@ st.divider()
 #         st.write(f'You selected for Pair {pair_name}: {user_choice}')
 
 def collect_ratings_comprehend(audio_samples):
+    creds = ServiceAccountCredentials.from_json_keyfile_name('.streamlit/evaluation-407510-8f31bc069971.json', scope)
+
+    client = gspread.authorize(creds)
+    
+#Create one workbook name it 'TestSheet' and at the bottom rename Sheet1 as 'names'
+    sh = client.open('docs').worksheet('NaEV') 
+
     ratings = {}
     rating_choices = {
         1: "Very difficult to understand",
@@ -64,7 +71,7 @@ def collect_ratings_comprehend(audio_samples):
     }
     count = 0
     for sample in audio_samples:
-        st.write(f"Listening to audio {count}:")
+        st.write(f"Listening to audio {count+1}:")
         st.audio(sample, format='audio/wav')
         # Play audio (simulated)
         # Implement code to play the audio sample here (this depends on your audio playback method)
@@ -78,6 +85,15 @@ def collect_ratings_comprehend(audio_samples):
         ratings[sample] = selected_rating
         ratings_1[sample] = selected_rating_1
         count += 1
+    if st.button('Submit All Answer'):
+        rows =[]
+        for sample in audio_samples:
+            rows.append((ratings[sample], ratings_1[sample]))
+
+        #additional_df = pd.DataFrame(transcriptions)
+        
+        sh.append_row(rows)
+        st.write("All answers submitted successfully 🤓!")
     return ratings, ratings_1
 
 # def collect_natural(audio_samples):
@@ -222,23 +238,23 @@ def page_audio_comparison():
     #survey_ratings_naturalness = collect_natural(audio_samples)
 
     # Display collected ratings
-    for sample, rating in hearabl.items():
-        rating_choices = {
-            1: "Very difficult to understand",
-            2: "Difficult to understand",
-            3: "Moderately understandable",
-            4: "Easy to understand",
-            5: "Very easy to understand"
-        }
+    # for sample, rating in hearabl.items():
+    #     rating_choices = {
+    #         1: "Very difficult to understand",
+    #         2: "Difficult to understand",
+    #         3: "Moderately understandable",
+    #         4: "Easy to understand",
+    #         5: "Very easy to understand"
+    #     }
 
-    for sample, rating in naturalness.items():
-        rating_choices = {
-            1: "Very difficult to understand",
-            2: "Difficult to understand",
-            3: "Moderately understandable",
-            4: "Easy to understand",
-            5: "Very easy to understand"
-        }
+    # for sample, rating in naturalness.items():
+    #     rating_choices = {
+    #         1: "Very difficult to understand",
+    #         2: "Difficult to understand",
+    #         3: "Moderately understandable",
+    #         4: "Easy to understand",
+    #         5: "Very easy to understand"
+    #     }
 
 def page_feedback():
     st.title('Audio Comparison')
