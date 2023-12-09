@@ -88,7 +88,7 @@ def collect_ratings_comprehend(audio_samples):
     if st.button('Submit All Answer'):
         rows =[]
         for sample in audio_samples:
-            rows.append((ratings[sample], ratings_1[sample]))
+            rows.append(str(ratings[sample], ratings_1[sample]))
 
         #additional_df = pd.DataFrame(transcriptions)
         
