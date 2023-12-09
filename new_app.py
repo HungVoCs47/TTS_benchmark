@@ -218,11 +218,11 @@ def page_audio_comparison():
     audio_samples = list_files_with_full_path(folder_path)  # Add your audio file names or descriptions
 
     # Collect ratings
-    survey_ratings_comprehend = collect_ratings_comprehend(audio_samples)
+    hearabl, naturalness = collect_ratings_comprehend(audio_samples)
     #survey_ratings_naturalness = collect_natural(audio_samples)
 
     # Display collected ratings
-    for sample, rating in survey_ratings_comprehend.items():
+    for sample, rating in hearabl.items():
         rating_choices = {
             1: "Very difficult to understand",
             2: "Difficult to understand",
@@ -231,14 +231,14 @@ def page_audio_comparison():
             5: "Very easy to understand"
         }
 
-    # for sample, rating in survey_ratings_naturalness.items():
-    #     rating_choices = {
-    #         1: "Very difficult to understand",
-    #         2: "Difficult to understand",
-    #         3: "Moderately understandable",
-    #         4: "Easy to understand",
-    #         5: "Very easy to understand"
-    #     }
+    for sample, rating in naturalness.items():
+        rating_choices = {
+            1: "Very difficult to understand",
+            2: "Difficult to understand",
+            3: "Moderately understandable",
+            4: "Easy to understand",
+            5: "Very easy to understand"
+        }
 
 def page_feedback():
     st.title('Audio Comparison')
