@@ -123,7 +123,7 @@ def collect_natural(audio_samples):
 #             5: "Very easy to understand"
 #         }
 #         #st.write(f"{sample}: {rating} - {rating_choices[rating]}")
-conn = st.experimental_connection("gsheets", type=GSheetsConnection)
+#conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 
 
 def collect_transcriptions(audio_samples):
@@ -136,14 +136,13 @@ def collect_transcriptions(audio_samples):
 
     transcriptions = {}
     total_samples = len(audio_samples)
-    df = conn.read(worksheet="InteEV")
 
     for count, audio_sample in enumerate(audio_samples):
         st.write(f"Listening to audio {count + 1}")
         st.audio(audio_sample, format='audio/wav')
 
         transcription = st.text_area(f"What do you hear in audio {count + 1}?", key=f"transcription_{count}")
-        transcriptions[f"Audio_{count + 1}"] = [str(transcription)]
+        transcriptions[f"Audio_{count + 1}"] = str(transcription)
     
     
     
@@ -153,7 +152,7 @@ def collect_transcriptions(audio_samples):
         for count in range(len(audio_samples)):
             rows.append(transcriptions[f"Audio_{count + 1}"])
 
-        additional_df = pd.DataFrame(transcriptions)
+        #additional_df = pd.DataFrame(transcriptions)
         
         sh.append_row(rows)
         st.write("All transcriptions submitted successfully 🤓!")
