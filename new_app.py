@@ -54,6 +54,14 @@ def collect_ratings_comprehend(audio_samples):
         4: "Easy to understand",
         5: "Very easy to understand"
     }
+    ratings_1 = {}
+    rating_choices_1 = {
+        1: "Completely unnatural",
+        2: "Mostly unnatural",
+        3: "Neutral",
+        4: "Mostly natural",
+        5: "Completely natural"
+    }
     count = 0
     for sample in audio_samples:
         st.write(f"Listening to audio {count}:")
@@ -64,33 +72,36 @@ def collect_ratings_comprehend(audio_samples):
         # Ask the user for their rating by presenting a multiple-choice interface
         rating = st.radio(f"How will you rate the comprehensibility of the audio ?",
                           list(rating_choices.values()), key=f"transcription_{count}" , index=2)
+        rating_1 = st.radio(f"How will you rate the naturalness of the audio ?", list(rating_choices_1.values()), key=f"transcription_{count}_{count}",  index=2)
         selected_rating = [key for key, value in rating_choices.items() if value == rating][0]
+        selected_rating_1 = [key for key, value in rating_choices_1.items() if value == rating_1][0]
         ratings[sample] = selected_rating
+        ratings_1[sample] = selected_rating_1
         count += 1
-    return ratings
+    return ratings, ratings_1
 
-def collect_natural(audio_samples):
-    ratings = {}
-    rating_choices = {
-        1: "Completely unnatural",
-        2: "Mostly unnatural",
-        3: "Neutral",
-        4: "Mostly natural",
-        5: "Completely natural"
-    }
-    count = 0
-    for sample in audio_samples:
-        # st.write(f"Listening to audio {count}:")
-        # st.audio(sample, format='audio/wav')
-        # Play audio (simulated)
-        # Implement code to play the audio sample here (this depends on your audio playback method)
+# def collect_natural(audio_samples):
+#     ratings = {}
+#     rating_choices = {
+#         1: "Completely unnatural",
+#         2: "Mostly unnatural",
+#         3: "Neutral",
+#         4: "Mostly natural",
+#         5: "Completely natural"
+#     }
+#     count = 0
+#     for sample in audio_samples:
+#         # st.write(f"Listening to audio {count}:")
+#         # st.audio(sample, format='audio/wav')
+#         # Play audio (simulated)
+#         # Implement code to play the audio sample here (this depends on your audio playback method)
 
-        # Ask the user for their rating by presenting a multiple-choice interface
-        rating = st.radio(f"How will you rate the naturalness of the audio ?", list(rating_choices.values()), key=f"transcription_{count}_{count}",  index=2)
-        selected_rating = [key for key, value in rating_choices.items() if value == rating][0]
-        ratings[sample] = selected_rating
-        count += 1
-    return ratings
+#         # Ask the user for their rating by presenting a multiple-choice interface
+#         rating = st.radio(f"How will you rate the naturalness of the audio ?", list(rating_choices.values()), key=f"transcription_{count}_{count}",  index=2)
+#         selected_rating = [key for key, value in rating_choices.items() if value == rating][0]
+#         ratings[sample] = selected_rating
+#         count += 1
+#     return ratings
 
 # Main function for Streamlit app
 # def main():
@@ -208,7 +219,7 @@ def page_audio_comparison():
 
     # Collect ratings
     survey_ratings_comprehend = collect_ratings_comprehend(audio_samples)
-    survey_ratings_naturalness = collect_natural(audio_samples)
+    #survey_ratings_naturalness = collect_natural(audio_samples)
 
     # Display collected ratings
     for sample, rating in survey_ratings_comprehend.items():
@@ -220,14 +231,14 @@ def page_audio_comparison():
             5: "Very easy to understand"
         }
 
-    for sample, rating in survey_ratings_naturalness.items():
-        rating_choices = {
-            1: "Very difficult to understand",
-            2: "Difficult to understand",
-            3: "Moderately understandable",
-            4: "Easy to understand",
-            5: "Very easy to understand"
-        }
+    # for sample, rating in survey_ratings_naturalness.items():
+    #     rating_choices = {
+    #         1: "Very difficult to understand",
+    #         2: "Difficult to understand",
+    #         3: "Moderately understandable",
+    #         4: "Easy to understand",
+    #         5: "Very easy to understand"
+    #     }
 
 def page_feedback():
     st.title('Audio Comparison')
