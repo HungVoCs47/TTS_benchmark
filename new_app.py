@@ -127,7 +127,7 @@ conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 
 
 def collect_transcriptions(audio_samples):
-    creds = ServiceAccountCredentials.from_json_keyfile_name('evaluation-407510-8f31bc069971.json', scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_name('.streamlit/evaluation-407510-8f31bc069971.json', scope)
 
     client = gspread.authorize(creds)
     
