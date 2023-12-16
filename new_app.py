@@ -174,13 +174,14 @@ def collect_transcriptions(audio_samples):
         transcriptions[f"Audio_{count + 1}"] = str(transcription)
     
     
-    
+    transcription = st.text_area(f"Name",  key=f"transcription_121 ")
+    transcriptions["Name"] = str(transcription)
     #print(transcriptions)
     if st.button('Submit All Transcriptions'):
         rows =[]
         for count in range(len(audio_samples)):
             rows.append(transcriptions[f"Audio_{count + 1}"])
-
+        rows.append(transcriptions["Name"])
         #additional_df = pd.DataFrame(transcriptions)
         
         sh.append_row(rows)
