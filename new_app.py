@@ -85,6 +85,9 @@ def collect_ratings_comprehend(audio_samples):
         ratings[sample] = selected_rating
         ratings_1[sample] = selected_rating_1
         count += 1
+    
+    transcription = st.text_area(f"Name",  key=f"transcription_121 ")
+    
     if st.button('Submit All Answer'):
         rows =[]
         for sample in audio_samples:
@@ -92,7 +95,7 @@ def collect_ratings_comprehend(audio_samples):
             rows.append(decode)
 
         #additional_df = pd.DataFrame(transcriptions)
-        
+        rows.append(transcription)
         sh.append_row(rows)
         st.write("All answers submitted successfully 🤓!")
     return ratings, ratings_1
